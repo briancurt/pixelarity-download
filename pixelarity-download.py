@@ -2,6 +2,7 @@
 
 import argparse
 import requests
+import time
 from robobrowser import RoboBrowser
 from bs4 import BeautifulSoup
 
@@ -47,6 +48,7 @@ def main():
                 request = browser.session.get('https://pixelarity.com/' + templates[i] + '/download/html', stream=True)
                 with open('px-' + templates[i] + '.zip', "wb") as temp_zip:
                         temp_zip.write(request.content)
+                time.sleep(2)
         
 if __name__ == "__main__":
     main()
