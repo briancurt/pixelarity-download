@@ -6,3 +6,4 @@ This little script will download all the templates at once, so you don't have to
 
 `./pixelarity-download.py <E-MAIL> <PASSWORD>`
 
+To do: Add an update current templates feature.
