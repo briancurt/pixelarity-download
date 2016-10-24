@@ -17,7 +17,10 @@ def get_templates():
         
         for index in range(len(t)):
                 templates.append(t[index].h2.string)
-                
+
+        templates = [item.lower() for item in templates]
+        templates = [item.replace(" ", "") for item in templates]
+
         return templates
 
 def main():
