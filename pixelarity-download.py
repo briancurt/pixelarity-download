@@ -3,6 +3,7 @@
 import argparse
 import requests
 import time
+import os
 from robobrowser import RoboBrowser
 from bs4 import BeautifulSoup
 
@@ -45,10 +46,13 @@ def main():
 
         for i in range(len(templates)):
                 print('Downloading https://pixelarity.com/' + templates[i] + '/download/html ...')
-                request = browser.session.get('https://pixelarity.com/' + templates[i] + '/download/html', stream=True)
-                with open('px-' + templates[i] + '.zip', "wb") as temp_zip:
-                        temp_zip.write(request.content)
-                time.sleep(2)
+                if not os.path.exists('./px' + templates[i] + '.zip'):
+                        request = browser.session.get('https://pixelarity.com/' + templates[i] + '/download/html', stream=True)
+                        with open('px-' + templates[i] + '.zip', "wb") as temp_zip:
+                                temp_zip.write(request.content)
+                        time.sleep(2)
+                else:
+                        print 'Theme already downloaded. Delete file and run script to redownload.'
         
 if __name__ == "__main__":
     main()
