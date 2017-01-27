@@ -6,7 +6,6 @@ This little script will download all the templates at once, so you don't have to
 
 `./pixelarity-download.py <E-MAIL> <PASSWORD>`
 
-To force the redownload of already downloaded themes, supply the `-f` parameter
-with the value `True`.
+To force the redownload of already downloaded themes, supply the `-f` parameter.
 
 To do: Add an update current templates feature.
