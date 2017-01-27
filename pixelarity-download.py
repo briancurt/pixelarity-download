@@ -30,6 +30,7 @@ def main():
         parser = argparse.ArgumentParser(description='Login to Pixelarity.')
         parser.add_argument("email")
         parser.add_argument("password")
+        parser.add_argument('-f', '--force', help="Force redownload of all themes. Supply `True` or `False`.", required=False)
         args = parser.parse_args()
 
         browser = RoboBrowser()
@@ -46,7 +47,7 @@ def main():
 
         for i in range(len(templates)):
                 print('Downloading https://pixelarity.com/' + templates[i] + '/download/html ...')
-                if not os.path.exists('./px-' + templates[i] + '.zip'):
+                if not os.path.exists('./px-' + templates[i] + '.zip') or (args.force):
                         request = browser.session.get('https://pixelarity.com/' + templates[i] + '/download/html', stream=True)
                         with open('px-' + templates[i] + '.zip', "wb") as temp_zip:
                                 temp_zip.write(request.content)
