@@ -7,6 +7,7 @@ import os
 from robobrowser import RoboBrowser
 from bs4 import BeautifulSoup
 import zipfile
+import shutil
 
 def get_templates():
 
@@ -19,11 +20,11 @@ def get_templates():
         t = soup.find("section").find_all("article")
         
         for index in range(len(t)):
-                templates.append(t[index].h2.string)
+                templates.append(t[index].a.get("href").replace("/", ""))
 
         templates = [item.lower() for item in templates]
         templates = [item.replace(" ", "") for item in templates]
-
+        
         return templates
 
 def main():
@@ -51,14 +52,19 @@ def main():
                         os.makedirs('./px-' + templates[i] + '/')
                 if not os.path.exists('./px-' + templates[i] + '/px-' + templates[i] + '.zip'):
                         request = browser.session.get('https://pixelarity.com/' + templates[i] + '/download/html', stream=True)
-                        with open('./px-' + templates[i] + '/px-' + templates[i] + '.zip', "wb") as temp_zip:
-                                temp_zip.write(request.content)
-                        time.sleep(2)
-                        if not os.path.exists('./px-' + templates[i] + '/html/'):
-                                os.makedirs('./px-' + templates[i] + '/html/')
-                        zip_ref = zipfile.ZipFile('./px-' + templates[i] + '/px-' + templates[i] + '.zip', 'r')
-                        zip_ref.extractall('./px-' + templates[i] + '/html/')
-                        zip_ref.close()
+                        if request.status_code == 200:
+                                with open('./px-' + templates[i] + '/px-' + templates[i] + '.zip', "wb") as temp_zip:
+                                        request.raw.decode_content = True
+                                        shutil.copyfileobj(request.raw, temp_zip)
+                                time.sleep(2)
+                                if not os.path.exists('./px-' + templates[i] + '/html/'):
+                                        os.makedirs('./px-' + templates[i] + '/html/')
+                                zip_ref = zipfile.ZipFile('./px-' + templates[i] + '/px-' + templates[i] + '.zip', 'r')
+                                zip_ref.extractall('./px-' + templates[i] + '/html/')
+                                zip_ref.close()
+                        else:
+                                print 'Error:'
+                                print request.status_code
                 else:
                         if not os.path.exists('./px-' + templates[i] + '/html/'):
                                 os.makedirs('./px-' + templates[i] + '/html/')
