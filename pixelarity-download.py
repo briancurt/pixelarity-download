@@ -6,6 +6,7 @@ import time
 import os
 from robobrowser import RoboBrowser
 from bs4 import BeautifulSoup
+import zipfile
 
 def get_templates():
 
@@ -46,13 +47,27 @@ def main():
 
         for i in range(len(templates)):
                 print('Downloading https://pixelarity.com/' + templates[i] + '/download/html ...')
-                if not os.path.exists('./px-' + templates[i] + '.zip'):
+                if not os.path.exists('./px-' + templates[i] + '/'):
+                        os.makedirs('./px-' + templates[i] + '/')
+                if not os.path.exists('./px-' + templates[i] + '/px-' + templates[i] + '.zip'):
                         request = browser.session.get('https://pixelarity.com/' + templates[i] + '/download/html', stream=True)
-                        with open('px-' + templates[i] + '.zip', "wb") as temp_zip:
+                        with open('./px-' + templates[i] + '/px-' + templates[i] + '.zip', "wb") as temp_zip:
                                 temp_zip.write(request.content)
                         time.sleep(2)
+                        if not os.path.exists('./px-' + templates[i] + '/html/'):
+                                os.makedirs('./px-' + templates[i] + '/html/')
+                        zip_ref = zipfile.ZipFile('./px-' + templates[i] + '/px-' + templates[i] + '.zip', 'r')
+                        zip_ref.extractall('./px-' + templates[i] + '/html/')
+                        zip_ref.close()
                 else:
-                        print 'Theme already downloaded. Delete file and run script to redownload.'
+                        if not os.path.exists('./px-' + templates[i] + '/html/'):
+                                os.makedirs('./px-' + templates[i] + '/html/')
+                                zip_ref = zipfile.ZipFile('./px-' + templates[i] + '/px-' + templates[i] + '.zip', 'r')
+                                zip_ref.extractall('./px-' + templates[i] + '/html/')
+                                zip_ref.close()
+                        else:
+                                print 'Theme already downloaded. Delete file and run script to redownload.'
         
 if __name__ == "__main__":
     main()
+
