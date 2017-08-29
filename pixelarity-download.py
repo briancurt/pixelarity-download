@@ -32,6 +32,7 @@ def main():
         parser = argparse.ArgumentParser(description="Login to Pixelarity.")
         parser.add_argument("email")
         parser.add_argument("password")
+        parser.add_argument('-f', '--force', help="Force redownload of all themes. Supply `True` or `False`.", action='store_true', required=False)
         args = parser.parse_args()
 
         browser = RoboBrowser()
@@ -91,4 +92,3 @@ def main():
         
 if __name__ == "__main__":
     main()
-
