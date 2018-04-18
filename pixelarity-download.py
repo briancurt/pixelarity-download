@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/usr/bin/env python3
 
 import argparse
 import requests
@@ -12,19 +12,19 @@ import shutil
 def get_templates():
 
         templates = []
-        
+
         browser = RoboBrowser()
         browser.open("https://pixelarity.com/")
         r = browser.parsed()
         soup = BeautifulSoup(str(r[0]), "html.parser")
         t = soup.find("section").find_all("article")
-        
+
         for index in range(len(t)):
                 templates.append(t[index].a.get("href").replace("/", ""))
 
         templates = [item.lower() for item in templates]
         templates = [item.replace(" ", "") for item in templates]
-        
+
         return templates
 
 def main():
@@ -89,6 +89,6 @@ def main():
                                 zip_ref.close()
                         else:
                                 print("Theme already downloaded. Delete file and run script to redownload.")
-        
+
 if __name__ == "__main__":
     main()
