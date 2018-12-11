@@ -1,0 +1,2 @@
+beautifulsoup4==4.6.3
+robobrowser==0.5.3
