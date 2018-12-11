@@ -1,4 +1,5 @@
 # pixelarity-download
+[![Build Status](https://travis-ci.org/briancurt/pixelarity-download.svg?branch=master)](https://travis-ci.org/briancurt/pixelarity-download)
 
 [Pixelarity](https://pixelarity.com/) is awesome :heart:
 
