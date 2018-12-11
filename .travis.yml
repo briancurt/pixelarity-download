@@ -4,4 +4,4 @@ python:
   - "3.6"
   - "3.7-dev"
 script:
-  - pytest
+  - ./pixelarity-download.py "test@test.com" "test"
