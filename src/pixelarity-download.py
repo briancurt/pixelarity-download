@@ -81,10 +81,10 @@ def get_templates():
     """Return all Pixelarity templates in an array."""
     templates = []
 
-    browser = RoboBrowser()
+    browser = RoboBrowser(parser='html.parser')
     browser.open("https://pixelarity.com/")
     r = browser.parsed()
-    soup = BeautifulSoup(str(r[0]), "html.parser")
+    soup = BeautifulSoup(str(r[0]), features="html.parser")
     t = soup.find("section").find_all("article")
 
     for index in range(len(t)):
@@ -103,27 +103,27 @@ def main():
     parser.add_argument(
         "-f",
         "--force",
-        help="Force redownload of all themes. Supply `True` or `False`.",
+        help="Force redownload of all themes. Supply `True` or `False`",
         action="store_true",
         required=False,
     )
     parser.add_argument(
         "-p",
         "--psd",
-        help="Download PSD themes too.",
+        help="Download PSD themes too",
         action="store_true",
         required=False,
     )
     parser.add_argument(
         "-x",
         "--extract",
-        help="Extract templates zipfiles.",
+        help="Extract templates zipfiles",
         action="store_true",
         required=False,
     )
     args = parser.parse_args()
 
-    browser = RoboBrowser()
+    browser = RoboBrowser(parser='html.parser')
     templates = get_templates()
 
     browser.open("https://pixelarity.com/login")
