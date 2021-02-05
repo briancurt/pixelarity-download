@@ -1,4 +1,4 @@
-FROM python:3.6.5-alpine
+FROM python:3.9.1-alpine
 MAINTAINER Brian Curtich "bcurtich@gmail.com"
 
 RUN apk update \

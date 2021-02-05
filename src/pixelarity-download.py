@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+import werkzeug
+werkzeug.cached_property = werkzeug.utils.cached_property
+
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 from argparse import ArgumentParser
 from time import sleep
 from os import path, makedirs
@@ -32,6 +38,7 @@ def download_template(template, template_type, force_download, browser):
         request = browser.session.get(
             "https://pixelarity.com/" + template + "/download/" + template_type,
             stream=True,
+            verify=False
         )
         if request.status_code == 200:
             with open(
@@ -82,7 +89,7 @@ def get_templates():
     templates = []
 
     browser = RoboBrowser(parser='html.parser')
-    browser.open("https://pixelarity.com/")
+    browser.open("https://pixelarity.com/", verify=False)
     r = browser.parsed()
     soup = BeautifulSoup(str(r[0]), features="html.parser")
     t = soup.find("section").find_all("article")
@@ -126,7 +133,7 @@ def main():
     browser = RoboBrowser(parser='html.parser')
     templates = get_templates()
 
-    browser.open("https://pixelarity.com/login")
+    browser.open("https://pixelarity.com/login", verify=False)
 
     login_form = browser.get_form(id="ajaxForm1")
 

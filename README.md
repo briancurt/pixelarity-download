@@ -3,7 +3,7 @@
 
 [Pixelarity](https://pixelarity.com/) is awesome :heart:
 
-This little utility will download all the templates at once, so you don't have to click one by one every time.
+This little utility will recursively download all the templates at once, so you don't have to click one by one every time.
 
 ### Usage
 
@@ -11,12 +11,17 @@ With Docker:
 
 `docker run --rm -it -v /your/templates/directory:/tmp/downloads briancurt/pixelarity-download <EMAIL> <PASSWORD>`
 
-Or clone the repo and run:
+Or run the script directly:
 
 ```bash
-pip install -r requirements.txt
+git clone git@github.com:briancurt/pixelarity-download.git
+cd pixelarity-download/
+pip3 install -r requirements.txt
 src/pixelarity-download.py <EMAIL> <PASSWORD>
 ```
 
-To force the redownload of already downloaded themes, supply the `-f` parameter.
+To re-download existing themes, use the `-f` flag.
 
+### Note
+
+SSL verification has been explicitly disabled because at the time of this writing the website does not return all the intermediate certificates from the chain correctly. It's okay-ish in this use case, but never disable SSL verification otherwise.
