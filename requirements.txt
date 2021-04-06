@@ -16,5 +16,5 @@ robobrowser==0.5.3
 six==1.15.0
 soupsieve==2.1
 toml==0.10.2
-urllib3==1.26.3
+urllib3==1.26.4
 Werkzeug==1.0.1
